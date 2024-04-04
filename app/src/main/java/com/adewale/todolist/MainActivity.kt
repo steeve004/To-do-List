@@ -65,15 +65,6 @@ fun TaskManagerApp() {
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            Text("Priority: ")
-            Spacer(modifier = Modifier.width(8.dp))
-            PriorityDropdown(
-                priority = newTaskPriority,
-                onPrioritySelected = { newTaskPriority = it }
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
         TextField(
             value = newTaskDate,
             onValueChange = { newTaskDate = it },
@@ -87,6 +78,16 @@ fun TaskManagerApp() {
             label = { Text("Task Note") },
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(16.dp))
+        Row {
+            Text("Priority: ")
+            Spacer(modifier = Modifier.width(8.dp))
+            PriorityDropdown(
+                priority = newTaskPriority,
+                onPrioritySelected = { newTaskPriority = it }
+            )
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
