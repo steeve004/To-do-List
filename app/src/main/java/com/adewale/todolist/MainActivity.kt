@@ -9,12 +9,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import java.util.*
 
@@ -42,12 +42,22 @@ fun TaskManagerApp() {
     var newTaskTitle by remember { mutableStateOf("") }
     var newTaskPriority by remember { mutableStateOf(Priority.MEDIUM) }
     var newTaskDueDate by remember { mutableStateOf<Date?>(null) }
+    var newTaskNote by remember { mutableStateOf("") }
+    var newTaskDate by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
+        Text(
+            text = "TODO List",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center)
+        )
         TextField(
             value = newTaskTitle,
             onValueChange = { newTaskTitle = it },
@@ -64,9 +74,18 @@ fun TaskManagerApp() {
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        DatePicker(
-            selectedDate = newTaskDueDate,
-            onDateSelected = { newTaskDueDate = it }
+        TextField(
+            value = newTaskDate,
+            onValueChange = { newTaskDate = it },
+            label = { Text("Task Date") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        TextField(
+            value = newTaskNote,
+            onValueChange = { newTaskNote = it },
+            label = { Text("Task Note") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
@@ -78,11 +97,15 @@ fun TaskManagerApp() {
                 newTaskTitle = ""
                 newTaskPriority = Priority.MEDIUM
                 newTaskDueDate = null
+                newTaskDate = ""
+                newTaskNote = ""
             },
-            modifier = Modifier.align(Alignment.End)
-
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center)
+                .padding(vertical = 16.dp)
         ) {
-            Text("Add Task")
+            Text("Add Task", style = MaterialTheme.typography.bodyLarge)
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
@@ -93,13 +116,15 @@ fun TaskManagerApp() {
     }
 }
 
+
+
 @Composable
 fun PriorityDropdown(
     priority: Priority,
     onPrioritySelected: (Priority) -> Unit
 ) {
     DropdownMenu(
-        expanded = false, // Change to true to see the dropdown
+        expanded = true, // Change to true to see the dropdown
         onDismissRequest = { /* Dismiss the dropdown */ }
     ) {
         Priority.values().forEach { priority ->
@@ -111,7 +136,7 @@ fun PriorityDropdown(
 }
 
 fun DropdownMenuItem(onClick: () -> Unit, interactionSource: @Composable () -> Unit) {
-
+    // Implement your DropdownMenuItem
 }
 
 @Composable
